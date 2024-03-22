@@ -51,7 +51,7 @@ public class Calculadora extends JFrame {
 
     private void validarNumbers() throws NumberFormatException {
         if (campoValor1.getText().isEmpty() & campoValor2.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "O campo não pode ser nulo nulo");
+            JOptionPane.showMessageDialog(this, "O campo não pode ser nulo");
         }
 
         var number1 = Integer.parseInt(campoValor1.getText());
