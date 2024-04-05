@@ -2,6 +2,9 @@ package exercicioCalc;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Calculadora extends JFrame {
     private static final String CAMPO1 = "Campo 1";
@@ -59,7 +62,8 @@ public class Calculadora extends JFrame {
 
         try {
             if (valorStr.isEmpty()) throw new CalculadoraException("O valor do " + campo + " não deve ser nulo");
-            if (valorStr.isBlank()) throw new CalculadoraException("O valor do %s não pode ser espaços".formatted(campo));
+            if (valorStr.isBlank())
+                throw new CalculadoraException("O valor do %s não pode ser espaços".formatted(campo));
             return Integer.parseInt(valorStr);
         } catch (NumberFormatException n) {
             this.falha = Boolean.TRUE;
@@ -75,16 +79,31 @@ public class Calculadora extends JFrame {
 
     // Método somar;
     private void somar() {
-            var valor1 = converter(campoValor1.getText(), CAMPO1);
-            var valor2 = converter(campoValor2.getText(), CAMPO2);
+        var valor1 = converter(campoValor1.getText(), CAMPO1);
+        var valor2 = converter(campoValor2.getText(), CAMPO2);
 
-            if (this.falha) {
-                this.falha = Boolean.FALSE;
-                return;
-            }
+        if (this.falha) {
+            this.falha = Boolean.FALSE;
+            return;
+        }
 
-            var total = valor1 + valor2;
-            JOptionPane.showMessageDialog(this, "Resultado: " + total);
+        var total = valor1 + valor2;
+        JOptionPane.showMessageDialog(this, "Resultado: " + total);
+    }
+
+    private void salvar(String valor) {
+        var diretorioProjeto = System.getProperty("user.dir");
+        var nomeArquivo = "\\Calculadora.txt";
+        var arquivo = new File(diretorioProjeto, nomeArquivo);
+
+        try (BufferedWriter writer = new BufferedWriter(
+                new FileWriter(arquivo)
+        )) {
+            writer.newLine();
+            writer.write(valor);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
+}
 
